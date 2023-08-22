@@ -7,10 +7,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-   
     <div class="container">
         <h1>PHP Hotel</h1>
-        <table class="table">
+        
+       
+        <form action="" method="GET">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="has_parking" id="has_parking">
+                <label class="form-check-label" for="has_parking">
+                    Only Hotels with Parking
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Apply Filter</button>
+        </form>
+        
+        <table class="table mt-3">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -60,7 +71,12 @@
                     ],
                 ];
 
+                $filterHasParking = isset($_GET['has_parking']) && $_GET['has_parking'] === 'on';
+
                 foreach ($hotels as $hotel) {
+                    if ($filterHasParking && !$hotel['parking']) {
+                        continue; 
+                    }
                     echo "<tr>";
                     echo "<td>" . $hotel['name'] . "</td>";
                     echo "<td>" . $hotel['description'] . "</td>";
@@ -74,7 +90,7 @@
         </table>
     </div>
 
-    <style>
+<style>
 
         body {
             background-color: #003990;
@@ -82,6 +98,8 @@
         }
 
     </style>
+
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
